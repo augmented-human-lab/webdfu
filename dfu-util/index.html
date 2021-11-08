@@ -2,7 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="../sakura.css" />
-    <title>WebUSB DFU</title>
+    <title>Kiwrious DFU</title>
     <script src="dfu.js"></script>
     <script src="dfuse.js"></script>
     <script src="FileSaver.js"></script>
@@ -37,16 +37,23 @@
         <option value="0x1EAF">LeafLabs Maple/stm32duino bootloader</option>
       </datalist>
     </p>
-    <h2>Kiwrious  UV sensor firmware update utility</h2>
+    <h2>Kiwrious  sensor update utility</h2>
     <p>
+      1: Click Step 1 and Select the Kiwrios Sensor <br>
+      2: Click Step 2 and Select the Kiwrios DFU <br>
+      3: Click Step 3 <br>
+      4: Update is complete. Please reconnect the sensor to the computer.
+    </p>
+    
       <button id="connect">Step 1</button>
-    </p>
-     <p>
+	  
+    >>
       <button id="connect2">Step 2</button>
-    </p>
-    <p>
+	  
+  >>
      <button id="download" disabled="true">Step 3</button>
-   </p>
+	
+   
     <dialog id="interfaceDialog">
       Your device has multiple DFU interfaces. Select one from the list below:
       <form id="interfaceForm" method="dialog">
@@ -57,13 +64,12 @@
       <div id="usbInfo" style="white-space: pre"></div>
       <div id="dfuInfo" style="white-space: pre"></div>
     </p>
-    <fieldset hidden="true">
-      <legend>Runtime mode</legend>
-      <button id="detach" disabled="true">Detach DFU</button>
+    <fieldset >
+      <legend hidden="true">Runtime mode</legend>
+      <button hidden="true" id="detach" disabled="true">Detach DFU</button>
     </fieldset>
     <fieldset>
       <form id="configForm">
-        <label hidden="true" for="transferSize">Transfer Size:</label>
         <input hidden="true" type="number" name="transferSize" id="transferSize" value="1024"/>
         <div id="dfuseFields" hidden="true">
           <label for="dfuseStartAddress">DfuSe Start Address:</label>
@@ -88,7 +94,7 @@
     </fieldset>
     <h1>About</h1>
     <p>
-      This is a based on the proof-of-concept demo by @devanlai. Source: <a href="https://devanlai.github.io/webdfu/dfu-util/">Git Repo</a> 
+      This is a tool to update the firmware on Kiwrious Sensors. Based on the proof-of-concept demo by @devanlai. Source: <a href="https://devanlai.github.io/webdfu/dfu-util/">Git Repo</a> 
     </p>
     
       
