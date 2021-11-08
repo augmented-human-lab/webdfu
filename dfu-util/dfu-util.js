@@ -543,11 +543,29 @@ var device = null;
                                 {
                                     console.log("Setting timeout to detatch")
                                         setTimeout(function () {
-                                            downloadButton.disabled = false;
+                                            downloadButton.disabled = true;
+                                            if (!device.device_.productName.includes("UV"))
+                                                {
+                                                    connectButton2.disabled = true;
+                                                    logWarning("Please connect a Kiwrious UV sensor");
+                                                    device.logWarning(device.device_.productName)
+                                                
+                                                    console.log(device.device_.productName)
+                                                    return false;
+                                                }
+                                            else
+                                            {
+                                                connectButton2.disabled = false;
 
-                                            detatchFunction()
+                                                detatchFunction()
+                                            }
+                                            
                                         }, 100)
                                     }
+                                else if (device.settings.alternate.interfaceProtocol == 0x01)
+                                {
+                                    downloadButton.disabled = false;
+                                }
 
                                 
                         } else {
@@ -646,6 +664,9 @@ var device = null;
             if (device && firmwareFile != null) {
                 setLogContext(downloadLog);
                 clearLog(downloadLog);
+
+
+
                 try {
                     let status = await device.getStatus();
                     if (status.state == dfu.dfuERROR) {
