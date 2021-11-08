@@ -541,13 +541,14 @@ var device = null;
                             console.log("1 interfa")
                              if (device.settings.alternate.interfaceProtocol == 0x01)
                                 {
-                                    console.log("settong timeout ")
+                                    console.log("Setting timeout to detatch")
                                         setTimeout(function () {
                                             downloadButton.disabled = false;
 
                                             detatchFunction()
                                         }, 100)
                                     }
+
                                 
                         } else {
                             await fixInterfaceNames(selectedDevice, interfaces);
