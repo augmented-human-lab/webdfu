@@ -1,11 +1,6 @@
 # webdfu
 This is a proof-of-concept demo of host [USB DFU](http://wiki.openmoko.org/wiki/USB_DFU) drivers in Javascript utilizing the [WebUSB](https://wicg.github.io/webusb/) draft standard to implement USB firmware updates from the browser.
 
-## Demos
-### dfu-util
-A demo re-implementing dfu-util functionality in the browser:
-
-https://devanlai.github.io/webdfu/dfu-util/
 
 ### mbed-download
 A demo using WebUSB and the [mbed remote compilation API](https://developer.mbed.org/handbook/Compile-API) to build and flash boards in one step:
