@@ -282,7 +282,7 @@ var device = null;
 
 
                 var oReq = new XMLHttpRequest();
-        oReq.open("GET", "/UV_Light_fixed.dfu", true);
+        oReq.open("GET", "dfu-util/UV_Light_fixed.dfu", true);
         oReq.responseType = "arraybuffer";
         firmwareFile = null;
         console.log("Getting file");
@@ -551,7 +551,7 @@ var device = null;
                                                     device.logWarning(device.device_.productName)
                                                 
                                                     console.log(device.device_.productName)
-                                                    return false;
+                                                    
                                                 }
                                             else
                                             {
