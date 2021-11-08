@@ -219,6 +219,7 @@ var device = null;
 
     document.addEventListener('DOMContentLoaded', event => {
         let connectButton = document.querySelector("#connect");
+        let connectButton2 = document.querySelector("#connect2");
         let detachButton = document.querySelector("#detach");
         let downloadButton = document.querySelector("#download");
         let uploadButton = document.querySelector("#upload");
@@ -232,7 +233,7 @@ var device = null;
 
         let searchParams = new URLSearchParams(window.location.search);
         let fromLandingPage = false;
-        let vid = 0;
+        let vid = 1240;
         // Set the vendor ID from the landing page URL
         if (searchParams.has("vid")) {
             const vidString = searchParams.get("vid");
@@ -276,6 +277,25 @@ var device = null;
 
         let manifestationTolerant = true;
 
+
+        //Get firmware file
+
+
+                var oReq = new XMLHttpRequest();
+        oReq.open("GET", "/UV_Light_fixed.dfu", true);
+        oReq.responseType = "arraybuffer";
+        firmwareFile = null;
+        console.log("Getting file");
+        oReq.onload = function (oEvent) {
+         firmwareFile = oReq.response; // Note: not oReq.responseText
+         
+          if (firmwareFile) {
+            console.log("got file");
+        
+          }
+        };
+
+        oReq.send(null);
         //let device;
 
         function onDisconnect(reason) {
@@ -283,12 +303,12 @@ var device = null;
                 statusDisplay.textContent = reason;
             }
 
-            connectButton.textContent = "Connect";
+          //  connectButton.textContent = "Connect";
             infoDisplay.textContent = "";
             dfuDisplay.textContent = "";
             detachButton.disabled = true;
-            uploadButton.disabled = true;
-            downloadButton.disabled = true;
+            
+           // downloadButton.disabled = true;
             firmwareFileField.disabled = true;
         }
 
@@ -332,7 +352,7 @@ var device = null;
 
                 if (device.settings.alternate.interfaceProtocol == 0x02) {
                     if (!desc.CanUpload) {
-                        uploadButton.disabled = true;
+                        
                         dfuseUploadSizeField.disabled = true;
                     }
                     if (!desc.CanDnload) {
@@ -383,7 +403,7 @@ var device = null;
 
             // Display basic USB information
             statusDisplay.textContent = '';
-            connectButton.textContent = 'Disconnect';
+          //  connectButton.textContent = 'Disconnect';
             infoDisplay.textContent = (
                 "Name: " + device.device_.productName + "\n" +
                 "MFG: " + device.device_.manufacturerName + "\n" +
@@ -397,13 +417,13 @@ var device = null;
             if (device.settings.alternate.interfaceProtocol == 0x01) {
                 // Runtime
                 detachButton.disabled = false;
-                uploadButton.disabled = true;
-                downloadButton.disabled = true;
+                
+              //  downloadButton.disabled = true;
                 firmwareFileField.disabled = true;
             } else {
                 // DFU
                 detachButton.disabled = true;
-                uploadButton.disabled = false;
+                
                 downloadButton.disabled = false;
                 firmwareFileField.disabled = false;
             }
@@ -428,6 +448,7 @@ var device = null;
                 dfuseUploadSizeField.disabled = true;
             }
 
+            
             return device;
         }
 
@@ -489,7 +510,15 @@ var device = null;
             }
         });
 
-        connectButton.addEventListener('click', function() {
+
+         connectButton.addEventListener('click', function(){
+            connectFunction();
+         });
+          connectButton2.addEventListener('click', function(){
+            connectFunction();
+         });
+
+        function connectFunction(){
             if (device) {
                 device.close().then(onDisconnect);
                 device = null;
@@ -509,6 +538,17 @@ var device = null;
                         } else if (interfaces.length == 1) {
                             await fixInterfaceNames(selectedDevice, interfaces);
                             device = await connect(new dfu.Device(selectedDevice, interfaces[0]));
+                            console.log("1 interfa")
+                             if (device.settings.alternate.interfaceProtocol == 0x01)
+                                {
+                                    console.log("settong timeout ")
+                                        setTimeout(function () {
+                                            downloadButton.disabled = false;
+
+                                            detatchFunction()
+                                        }, 100)
+                                    }
+                                
                         } else {
                             await fixInterfaceNames(selectedDevice, interfaces);
                             populateInterfaceList(interfaceForm, selectedDevice, interfaces);
@@ -516,7 +556,10 @@ var device = null;
                                 interfaceForm.removeEventListener('submit', this);
                                 const index = interfaceForm.elements["interfaceIndex"].value;
                                 device = await connect(new dfu.Device(selectedDevice, interfaces[index]));
+                               
                             }
+                            
+
 
                             interfaceForm.addEventListener('submit', connectToSelectedInterface);
 
@@ -532,10 +575,13 @@ var device = null;
                     statusDisplay.textContent = error;
                 });
             }
-        });
+        }
 
-        detachButton.addEventListener('click', function() {
+
+        function detatchFunction(){
             if (device) {
+                            console.log("detatch called")
+
                 device.detach().then(
                     async len => {
                         let detached = false;
@@ -560,50 +606,20 @@ var device = null;
                         device = null;
                     }
                 );
+
+
+              
             }
+
+
+        }
+
+        detachButton.addEventListener('click', function() {
+            console.log("detatch clicked")
+            detatchFunction();
         });
 
-        uploadButton.addEventListener('click', async function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (!configForm.checkValidity()) {
-                configForm.reportValidity();
-                return false;
-            }
-
-            if (!device || !device.device_.opened) {
-                onDisconnect();
-                device = null;
-            } else {
-                setLogContext(uploadLog);
-                clearLog(uploadLog);
-                try {
-                    let status = await device.getStatus();
-                    if (status.state == dfu.dfuERROR) {
-                        await device.clearStatus();
-                    }
-                } catch (error) {
-                    device.logWarning("Failed to clear status");
-                }
-
-                let maxSize = Infinity;
-                if (!dfuseUploadSizeField.disabled) {
-                    maxSize = parseInt(dfuseUploadSizeField.value);
-                }
-
-                try {
-                    const blob = await device.do_upload(transferSize, maxSize);
-                    saveAs(blob, "firmware.bin");
-                } catch (error) {
-                    logError(error);
-                }
-
-                setLogContext(null);
-            }
-
-            return false;
-        });
-
+      
         firmwareFileField.addEventListener("change", function() {
             firmwareFile = null;
             if (firmwareFileField.files.length > 0) {
@@ -623,6 +639,8 @@ var device = null;
                 configForm.reportValidity();
                 return false;
             }
+
+          
 
             if (device && firmwareFile != null) {
                 setLogContext(downloadLog);
