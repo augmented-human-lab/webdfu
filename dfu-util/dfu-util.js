@@ -309,6 +309,7 @@ var device = null;
         //let device;
 
         function onDisconnect(reason) {
+            _log('onDisconnect');
             if (reason) {
                 statusDisplay.textContent = reason;
             }
@@ -323,6 +324,8 @@ var device = null;
         }
 
         function onUnexpectedDisconnect(event) {
+            _log('onUnexpectedDisconnect');
+
             if (device !== null && device.device_ !== null) {
                 if (device.device_ === event.device) {
                     device.disconnected = true;
@@ -333,6 +336,8 @@ var device = null;
         }
 
         async function connect(device) {
+            _log('connect');
+
             try {
                 await device.open();
             } catch (error) {
@@ -463,6 +468,7 @@ var device = null;
         }
 
         function autoConnect(vid, serial) {
+            _log('autoConnect');
             dfu.findAllDfuInterfaces().then(
                 async dfu_devices => {
                     let matching_devices = [];
@@ -529,6 +535,9 @@ var device = null;
          });
 
         function connectFunction(){
+            _log('connectFunction');
+
+            _log('device', device);
             if (device) {
                 device.close().then(onDisconnect);
                 device = null;
@@ -539,23 +548,40 @@ var device = null;
                 } else if (vid) {
                     filters.push({ 'vendorId': vid });
                 }
+
+                _log('requesting usb devices..');
                 navigator.usb.requestDevice({ 'filters': filters }).then(
                     async selectedDevice => {
+                        _log('selectedDevice:', selectedDevice);
+
                         let interfaces = dfu.findDeviceDfuInterfaces(selectedDevice);
+                        _log('interfaces', interfaces);
+
                         if (interfaces.length == 0) {
+                            _log('0 interface');
                             console.log(selectedDevice);
                             statusDisplay.textContent = "The selected device does not have any USB DFU interfaces.";
                         } else if (interfaces.length == 1) {
+                            _log('1 interface');
+
+                            _log('fixInterfaceNames..');
                             await fixInterfaceNames(selectedDevice, interfaces);
+
+                            _log('connecting..');
                             device = await connect(new dfu.Device(selectedDevice, interfaces[0]));
-                            console.log("1 interfa")
+                            _log('device', device);
+
+                            _log('interfaceProtocol', device.settings.alternate.interfaceProtocol);
                              if (device.settings.alternate.interfaceProtocol == 0x01)
                                 {
-                                    console.log("Setting timeout to detatch")
+                                    _log("timeout to detach..")
                                         setTimeout(function () {
                                             downloadButton.disabled = true;
+                                            
+                                            _log('productName', device.device_.productName);
                                             if (!device.device_.productName.includes("UV"))
                                                 {
+                                                    _log('NOT uv');
                                                     connectButton2.disabled = true;
                                                     logWarning("Please connect a Kiwrious UV sensor");
                                                     device.logWarning(device.device_.productName)
@@ -565,8 +591,8 @@ var device = null;
                                                 }
                                             else
                                             {
+                                                _log('IS uv');
                                                 connectButton2.disabled = false;
-
                                                 detatchFunction()
                                             }
                                             
@@ -574,11 +600,13 @@ var device = null;
                                     }
                                 else if (device.settings.alternate.interfaceProtocol == 0x01)
                                 {
+                                    _log('disabling download button -- IS THIS REACHED?')
                                     downloadButton.disabled = false;
                                 }
 
                                 
                         } else {
+                            _log('more than 1 interface..  -- IS THIS REACHED?')
                             await fixInterfaceNames(selectedDevice, interfaces);
                             populateInterfaceList(interfaceForm, selectedDevice, interfaces);
                             async function connectToSelectedInterface() {
