@@ -2,6 +2,10 @@ var device = null;
 (function() {
     'use strict';
 
+    function _log(...msg) {
+        console.log('|dfu-util|', ...msg);
+    }
+
     function hex4(n) {
         let s = n.toString(16)
         while (s.length < 4) {
@@ -281,21 +285,27 @@ var device = null;
         //Get firmware file
 
 
-                var oReq = new XMLHttpRequest();
-        oReq.open("GET", "./UV_Light_fixed.dfu", true);
-        oReq.responseType = "arraybuffer";
-        firmwareFile = null;
-        console.log("Getting file");
-        oReq.onload = function (oEvent) {
-         firmwareFile = oReq.response; // Note: not oReq.responseText
-         
-          if (firmwareFile) {
-            console.log("got file");
-        
-          }
-        };
 
-        oReq.send(null);
+        var dfuFileLocation = "./UV_Light_fixed.dfu";
+
+        function loadDfuFile(dfuFileLocation) {
+            _log('loading dfu file.. ');
+            var oReq = new XMLHttpRequest();
+            oReq.open("GET", dfuFileLocation, true);
+            oReq.responseType = "arraybuffer";
+            firmwareFile = null;
+            
+            oReq.onload = function (oEvent) {
+                firmwareFile = oReq.response; // Note: not oReq.responseText
+                
+                if (firmwareFile) {
+                    _log('dfu file loaded');
+                }
+            };
+
+            oReq.send(null);
+        }
+        loadDfuFile(dfuFileLocation);
         //let device;
 
         function onDisconnect(reason) {
