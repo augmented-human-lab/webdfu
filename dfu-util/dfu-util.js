@@ -690,40 +690,53 @@ var device = null;
         });
 
         downloadButton.addEventListener('click', async function(event) {
+            _log('download/step3 clicked');
             event.preventDefault();
             event.stopPropagation();
             if (!configForm.checkValidity()) {
                 configForm.reportValidity();
+                _log('validity check failed');
                 return false;
             }
 
-          
+            _log('device', device);
+            _log('firmwareFile', firmwareFile);
 
             if (device && firmwareFile != null) {
                 setLogContext(downloadLog);
                 clearLog(downloadLog);
 
-
-
                 try {
+                    _log('getting device status..');
                     let status = await device.getStatus();
+                    _log('status', status);
+
                     if (status.state == dfu.dfuERROR) {
+                        _log('clearing device status');
                         await device.clearStatus();
                     }
                 } catch (error) {
+                    _log('ERROR', error);
                     device.logWarning("Failed to clear status");
                 }
+
+                _log('do_download firmware file into the device..');
                 await device.do_download(transferSize, firmwareFile, manifestationTolerant).then(
                     () => {
+                        _log('do_download done');
                         logInfo("Done!");
                         setLogContext(null);
+                        
                         if (!manifestationTolerant) {
+                            _log('waitDisconnected..')
                             device.waitDisconnected(5000).then(
                                 dev => {
+                                    _log('waitDisconnected ok')
                                     onDisconnect();
                                     device = null;
                                 },
                                 error => {
+                                    _log('waitDisconnected ERROR', error);
                                     // It didn't reset and disconnect for some reason...
                                     console.log("Device unexpectedly tolerated manifestation.");
                                 }
@@ -731,6 +744,7 @@ var device = null;
                         }
                     },
                     error => {
+                        _log('do_download ERROR', error)
                         logError(error);
                         setLogContext(null);
                     }
