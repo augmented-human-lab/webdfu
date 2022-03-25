@@ -595,7 +595,7 @@ var device = null;
                                         _log('Failed to load DFU file');
                                         connectStep2Button.disabled = true;
                                         logWarning("Please connect a Kiwrious UV sensor");
-                                        device.logWarning(productName)                                    
+                                        device.logWarning(productName)
                                     }
                                     
                                 }, 100)
@@ -695,7 +695,6 @@ var device = null;
             detatchFunction();
         });
 
-      
         firmwareFileField.addEventListener("change", function() {
             firmwareFile = null;
             if (firmwareFileField.files.length > 0) {
@@ -717,6 +716,10 @@ var device = null;
                 _log('validity check failed');
                 return false;
             }
+
+            connectStep1Button.disabled = true;
+            connectStep2Button.disabled = true;
+            downloadStep3Button.disabled = true;
 
             _log('device', device);
             _log('firmwareFile', firmwareFile);
