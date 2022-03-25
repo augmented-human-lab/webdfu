@@ -284,10 +284,7 @@ var device = null;
 
         //Get firmware file
 
-
-
-        var dfuFileLocation = "./SENSOR_UV.dfu";
-
+        // TODO: CHANGE loadDfuFile TO ASYNC
         function loadDfuFile(dfuFileLocation) {
             _log('loading dfu file.. ');
             var oReq = new XMLHttpRequest();
@@ -309,7 +306,6 @@ var device = null;
             oReq.send(null);
         }
 
-        loadDfuFile(dfuFileLocation);
         //let device;
 
         function onDisconnect(reason) {
@@ -577,41 +573,39 @@ var device = null;
                             _log('device', device);
 
                             _log('interfaceProtocol', device.settings.alternate.interfaceProtocol);
-                             if (device.settings.alternate.interfaceProtocol == 0x01)
-                                {
-                                    _log("timeout to detach..")
-                                        setTimeout(function () {
-                                            downloadStep3Button.disabled = true;
-                                            
-                                            _log('productName', device.device_.productName);
+                            if (device.settings.alternate.interfaceProtocol == 0x01) {
+                                _log("100ms timeout to detach..")
+                                setTimeout(function () {
+                                    _log('100ms passed');
 
+                                    downloadStep3Button.disabled = true;
+                                    
+                                    const productName = device.device_.productName;
+                                    _log('productName', productName);
 
-                                            if (!device.device_.productName.includes("UV"))
-                                                {
-                                                    _log('NOT uv');
-                                                    connectStep2Button.disabled = true;
-                                                    logWarning("Please connect a Kiwrious UV sensor");
-                                                    device.logWarning(device.device_.productName)
-                                                
-                                                    console.log(device.device_.productName)
-                                                    
-                                                }
-                                            else
-                                            {
-                                                _log('IS uv');
-                                                connectStep2Button.disabled = false;
-                                                detatchFunction()
-                                            }
-                                            
-                                        }, 100)
+                                    const dfuLoadResult = loadDfuFileForProductName(productName);
+                                    _log('dfuLoadResult', dfuLoadResult);
+
+                                    if (dfuLoadResult) {
+                                        _log('load DFU file success')
+                                        connectStep2Button.disabled = false;
+                                        detatchFunction()
                                     }
-                                else if (device.settings.alternate.interfaceProtocol == 0x01)
-                                {
-                                    _log('disabling download button -- IS THIS REACHED?')
-                                    downloadStep3Button.disabled = false;
-                                }
+                                    else {
+                                        _log('Failed to load DFU file');
+                                        connectStep2Button.disabled = true;
+                                        logWarning("Please connect a Kiwrious UV sensor");
+                                        device.logWarning(productName)                                    
+                                    }
+                                    
+                                }, 100)
+                            }
+                            else if (device.settings.alternate.interfaceProtocol == 0x01) {
+                                _log('disabling download button -- IS THIS REACHED?')
+                                downloadStep3Button.disabled = false;
+                            }
 
-                                
+
                         } else {
                             _log('more than 1 interface..  -- IS THIS REACHED?')
                             await fixInterfaceNames(selectedDevice, interfaces);
@@ -638,6 +632,30 @@ var device = null;
                 ).catch(error => {
                     statusDisplay.textContent = error;
                 });
+            }
+        }
+
+        function loadDfuFileForProductName(productName) {
+            var dfuFileName = getDfuFileNameForProductName(productName);
+            if (!dfuFileName) {
+                _log('unable to find dfu file name');
+                return false;
+            }
+
+            loadDfuFile(dfuFileName);
+            return true;
+        }
+
+        function getDfuFileNameForProductName(productName) {
+            if (productName.includes("UV")) {
+                return './SENSOR_UV.dfu';
+            }
+            else if (productName.includes("Heart Rate")) {
+                return './SENSOR_HR.dfu';
+            }
+            else {
+                _log('invalid producutName', productName)
+                return null;
             }
         }
 

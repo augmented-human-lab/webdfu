@@ -1,7 +1,4 @@
-dfu-util.js:6 |dfu-util| loading dfu file.. 
-dfu-util.js:6 |dfu-util| dfu file loaded
-favicon.ico:1          GET http://localhost:8000/favicon.ico 404 (File not found)
-dfu-util.js:6 |dfu-util| STEP1/connectButton clicked
+|dfu-util| STEP1/connectButton clicked
 dfu-util.js:6 |dfu-util| connectFunction
 dfu-util.js:6 |dfu-util| device null
 dfu-util.js:6 |dfu-util| requesting usb devices..
@@ -13,11 +10,15 @@ dfu-util.js:6 |dfu-util| connecting..
 dfu-util.js:6 |dfu-util| connect
 dfu-util.js:6 |dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 2, properties: {…}, logDebug: ƒ, …}
 dfu-util.js:6 |dfu-util| interfaceProtocol 1
-dfu-util.js:6 |dfu-util| timeout to detach..
+dfu-util.js:6 |dfu-util| 100ms timeout to detach..
+dfu-util.js:6 |dfu-util| 100ms passed
 dfu-util.js:6 |dfu-util| productName Kiwrious UV and Light Sensor
-dfu-util.js:6 |dfu-util| IS uv
-dfu-util.js:641 detatch called
+dfu-util.js:6 |dfu-util| loading dfu file.. 
+dfu-util.js:6 |dfu-util| dfuLoadResult true
+dfu-util.js:6 |dfu-util| load DFU file success
+dfu-util.js:664 detatch called
 dfu-util.js:6 |dfu-util| onDisconnect
+dfu-util.js:6 |dfu-util| dfu file loaded
 dfu-util.js:6 |dfu-util| onUnexpectedDisconnect
 dfu-util.js:6 |dfu-util| STEP2/connectButton2 clicked
 dfu-util.js:6 |dfu-util| connectFunction
@@ -350,6 +351,7 @@ dfu-util.js:177 Ignored reset error
 dfu-util.js:6 |dfu-util| do_download done
 dfu-util.js:6 |dfu-util| waitDisconnected..
 dfu-util.js:6 |dfu-util| waitDisconnected ERROR undefined
-dfu-util.js:737 Device unexpectedly tolerated manifestation.
+dfu-util.js:760 Device unexpectedly tolerated manifestation.
 dfu-util.js:6 |dfu-util| onUnexpectedDisconnect
 dfu-util.js:6 |dfu-util| onDisconnect
+dfu-util.js:6 |dfu-util| onUnexpectedDisconnect
