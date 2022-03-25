@@ -192,38 +192,9 @@ var device = null;
         let statusDisplay = document.querySelector("#status");
         let infoDisplay = document.querySelector("#usbInfo");
         let dfuDisplay = document.querySelector("#dfuInfo");
-        let vidField = document.querySelector("#vid");
-
         
-        let searchParams = new URLSearchParams(window.location.search);
-        let fromLandingPage = false;
-        let vid = 1240;
-        // Set the vendor ID from the landing page URL
-        if (searchParams.has("vid")) {
-            const vidString = searchParams.get("vid");
-            try {
-                if (vidString.toLowerCase().startsWith("0x")) {
-                    vid = parseInt(vidString, 16);
-                } else {
-                    vid = parseInt(vidString, 10);
-                }
-                vidField.value = "0x" + hex4(vid).toUpperCase();
-                fromLandingPage = true;
-            } catch (error) {
-                console.log("Bad VID " + vidString + ":" + error);
-            }
-        }
-
-        // Grab the serial number from the landing page
-        let serial = "";
-        if (searchParams.has("serial")) {
-            serial = searchParams.get("serial");
-            // Workaround for Chromium issue 339054
-            if (window.location.search.endsWith("/") && serial.endsWith("/")) {
-                serial = serial.substring(0, serial.length-1);
-            }
-            fromLandingPage = true;
-        }
+        // VENDOR ID for Kiwrious
+        const vid = 1240;
 
         let transferSize = 1024;
 
@@ -238,25 +209,29 @@ var device = null;
         //Get firmware file
 
         // TODO: CHANGE loadDfuFile TO ASYNC
-        function loadDfuFile(dfuFileLocation) {
+        function loadDfuFileAsync(dfuFileLocation) {
             _log('loading dfu file.. ');
-            var oReq = new XMLHttpRequest();
-            oReq.open("GET", dfuFileLocation, true);
-            oReq.responseType = "arraybuffer";
-            firmwareFile = null;
             
-            oReq.onload = function (oEvent) {
-                firmwareFile = oReq.response; // Note: not oReq.responseText
-                
-                if (firmwareFile) {
-                    _log('dfu file loaded');
-                }
-                else {
-                    _log('ERROR, unable to load dfu file');
-                }
-            };
+            return new Promise((resolve, reject) => {
+                var oReq = new XMLHttpRequest();
+                oReq.open("GET", dfuFileLocation, true);
+                oReq.responseType = "arraybuffer";
+                firmwareFile = null;
+                oReq.onload = function (oEvent) {
+                    firmwareFile = oReq.response; // Note: not oReq.responseText
+                    
+                    if (firmwareFile) {
+                        _log('dfu file loaded');
 
-            oReq.send(null);
+                        resolve(firmwareFile);
+                    }
+                    else {
+                        _log('ERROR, unable to load dfu file');
+                        reject();
+                    }
+                };
+                oReq.send(null);
+            });
         }
 
         //let device;
@@ -390,97 +365,114 @@ var device = null;
             return device;
         }
 
-         connectStep1Button.addEventListener('click', function(){
-             _log('STEP1/connectButton clicked');
-            connectFunction();
-         });
-          connectStep2Button.addEventListener('click', function(){
-            _log('STEP2/connectButton2 clicked');
-            connectFunction();
-         });
+        connectStep1Button.addEventListener('click', async function(){
+            _log('STEP1/connectButton clicked');
+            // connectFunction();
 
-        function connectFunction(){
-            _log('connectFunction');
+            await requestDeviceConnectionAsync();
+            await requestDfuModeAsync();
+        });
+
+        connectStep2Button.addEventListener('click', async function(){
+            _log('STEP2/connectButton2 clicked');
+            // connectFunction();
+
+            await requestDeviceConnectionAsync();
+        });
+
+        async function requestDfuModeAsync() {
+            _log('requestDfuModeAsync');
+
+            if (!device) {
+                _log('device is not connected yet.')
+                return;
+            }
+
+            _log('interfaceProtocol', device.settings.alternate.interfaceProtocol);
+            if (device.settings.alternate.interfaceProtocol != 0x01) {
+                _log('invalid interface protocol. expecting 0x01');
+
+                return;
+            }
+
+            _log("100ms timeout to detach..")
+            setTimeout(async function () {
+                _log('100ms passed');
+
+                downloadStep3Button.disabled = true;
+                
+                const productName = device.device_.productName;
+                _log('productName', productName);
+
+                const dfuLoadResult = await loadDfuFileForProductNameAsync(productName);
+                _log('dfuLoadResult', dfuLoadResult);
+
+                if (dfuLoadResult) {
+                    _log('load DFU file success')
+                    connectStep2Button.disabled = false;
+                    detatchFunction()
+                }
+                else {
+                    _log('Failed to load DFU file');
+                    connectStep2Button.disabled = true;
+                    logWarning("Please connect a Kiwrious UV sensor");
+                    device.logWarning(productName)
+                }
+            }, 100);
+        }
+
+        async function requestDeviceConnectionAsync() {
+            _log('requestDeviceConnectionAsync');
 
             _log('device', device);
             if (device) {
-                device.close().then(onDisconnect);
+                _log('device already connected.. requesting disconnection');
+                await device.close();
+
+                onDisconnect();
                 device = null;
-            } else {
-                let filters = [];
-                if (serial) {
-                    filters.push({ 'serialNumber': serial });
-                } else if (vid) {
-                    filters.push({ 'vendorId': vid });
-                }
 
-                _log('requesting usb devices..');
-                navigator.usb.requestDevice({ 'filters': filters }).then(
-                    async selectedDevice => {
-                        _log('selectedDevice:', selectedDevice);
-
-                        let interfaces = dfu.findDeviceDfuInterfaces(selectedDevice);
-                        _log('interfaces', interfaces);
-
-                        if (interfaces.length == 0) {
-                            _log('0 interface');
-                            console.log(selectedDevice);
-                            statusDisplay.textContent = "The selected device does not have any USB DFU interfaces.";
-                        } else if (interfaces.length == 1) {
-                            _log('1 interface');
-
-                            _log('fixInterfaceNames..');
-                            await fixInterfaceNames(selectedDevice, interfaces);
-
-                            _log('connecting..');
-                            device = await connect(new dfu.Device(selectedDevice, interfaces[0]));
-                            _log('device', device);
-
-                            _log('interfaceProtocol', device.settings.alternate.interfaceProtocol);
-                            if (device.settings.alternate.interfaceProtocol == 0x01) {
-                                _log("100ms timeout to detach..")
-                                setTimeout(function () {
-                                    _log('100ms passed');
-
-                                    downloadStep3Button.disabled = true;
-                                    
-                                    const productName = device.device_.productName;
-                                    _log('productName', productName);
-
-                                    const dfuLoadResult = loadDfuFileForProductName(productName);
-                                    _log('dfuLoadResult', dfuLoadResult);
-
-                                    if (dfuLoadResult) {
-                                        _log('load DFU file success')
-                                        connectStep2Button.disabled = false;
-                                        detatchFunction()
-                                    }
-                                    else {
-                                        _log('Failed to load DFU file');
-                                        connectStep2Button.disabled = true;
-                                        logWarning("Please connect a Kiwrious UV sensor");
-                                        device.logWarning(productName)
-                                    }
-                                }, 100);
-                            }
-                        }
-                    }
-                ).catch(error => {
-                    _log('ERROR', error);
-                    statusDisplay.textContent = error;
-                });
+                return;
             }
+
+            let filters = [];
+            if (vid) {
+                filters.push({ 'vendorId': vid });
+            }
+
+            _log('requesting usb devices..');
+            const selectedDevice = await navigator.usb.requestDevice({ 'filters': filters });
+            _log('selectedDevice:', selectedDevice);
+
+            let interfaces = dfu.findDeviceDfuInterfaces(selectedDevice);
+            _log('interfaces', interfaces);
+
+            if (interfaces.length == 0) {
+                _log('0 interface');
+                statusDisplay.textContent = "The selected device does not have any USB DFU interfaces.";
+
+                return;
+            } 
+
+            _log('fixInterfaceNames..');
+            await fixInterfaceNames(selectedDevice, interfaces);
+
+            _log('connecting..');
+            device = await connect(new dfu.Device(selectedDevice, interfaces[0]));
+            _log('device', device);
+
+            return device;
         }
 
-        function loadDfuFileForProductName(productName) {
+        async function loadDfuFileForProductNameAsync(productName) {
             var dfuFileName = getDfuFileNameForProductName(productName);
             if (!dfuFileName) {
                 _log('unable to find dfu file name');
-                return false;
+                return null;
             }
 
-            loadDfuFile(dfuFileName);
-            return true;
+            const dfu = await loadDfuFileAsync(dfuFileName);
+            return dfu;
         }
 
         function getDfuFileNameForProductName(productName) {
