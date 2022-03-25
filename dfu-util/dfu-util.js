@@ -222,10 +222,10 @@ var device = null;
     }
 
     document.addEventListener('DOMContentLoaded', event => {
-        let connectButton = document.querySelector("#connect");
-        let connectButton2 = document.querySelector("#connect2");
+        let connectStep1Button = document.querySelector("#connectStep1");
+        let connectStep2Button = document.querySelector("#connectStep2");
         let detachButton = document.querySelector("#detach");
-        let downloadButton = document.querySelector("#download");
+        let downloadStep3Button = document.querySelector("#downloadStep3");
         let uploadButton = document.querySelector("#upload");
         let statusDisplay = document.querySelector("#status");
         let infoDisplay = document.querySelector("#usbInfo");
@@ -301,10 +301,14 @@ var device = null;
                 if (firmwareFile) {
                     _log('dfu file loaded');
                 }
+                else {
+                    _log('ERROR, unable to load dfu file');
+                }
             };
 
             oReq.send(null);
         }
+
         loadDfuFile(dfuFileLocation);
         //let device;
 
@@ -438,7 +442,7 @@ var device = null;
                 // DFU
                 detachButton.disabled = true;
                 
-                downloadButton.disabled = false;
+                downloadStep3Button.disabled = false;
                 firmwareFileField.disabled = false;
             }
 
@@ -526,11 +530,11 @@ var device = null;
         });
 
 
-         connectButton.addEventListener('click', function(){
+         connectStep1Button.addEventListener('click', function(){
              _log('STEP1/connectButton clicked');
             connectFunction();
          });
-          connectButton2.addEventListener('click', function(){
+          connectStep2Button.addEventListener('click', function(){
             _log('STEP2/connectButton2 clicked');
             connectFunction();
          });
@@ -577,13 +581,15 @@ var device = null;
                                 {
                                     _log("timeout to detach..")
                                         setTimeout(function () {
-                                            downloadButton.disabled = true;
+                                            downloadStep3Button.disabled = true;
                                             
                                             _log('productName', device.device_.productName);
+
+
                                             if (!device.device_.productName.includes("UV"))
                                                 {
                                                     _log('NOT uv');
-                                                    connectButton2.disabled = true;
+                                                    connectStep2Button.disabled = true;
                                                     logWarning("Please connect a Kiwrious UV sensor");
                                                     device.logWarning(device.device_.productName)
                                                 
@@ -593,7 +599,7 @@ var device = null;
                                             else
                                             {
                                                 _log('IS uv');
-                                                connectButton2.disabled = false;
+                                                connectStep2Button.disabled = false;
                                                 detatchFunction()
                                             }
                                             
@@ -602,7 +608,7 @@ var device = null;
                                 else if (device.settings.alternate.interfaceProtocol == 0x01)
                                 {
                                     _log('disabling download button -- IS THIS REACHED?')
-                                    downloadButton.disabled = false;
+                                    downloadStep3Button.disabled = false;
                                 }
 
                                 
@@ -634,7 +640,6 @@ var device = null;
                 });
             }
         }
-
 
         function detatchFunction(){
             if (device) {
@@ -685,7 +690,7 @@ var device = null;
             }
         });
 
-        downloadButton.addEventListener('click', async function(event) {
+        downloadStep3Button.addEventListener('click', async function(event) {
             _log('STEP3/downloadButton clicked');
             event.preventDefault();
             event.stopPropagation();
@@ -759,7 +764,7 @@ var device = null;
             }
         } else {
             statusDisplay.textContent = 'WebUSB not available.'
-            connectButton.disabled = true;
+            connectStep1Button.disabled = true;
         }
     });
 })();
