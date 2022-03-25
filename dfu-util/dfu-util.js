@@ -510,8 +510,10 @@ var device = null;
                 return './SENSOR_HR.dfu';
             }
             else {
-                _log('invalid producutName', productName)
-                return null;
+                _log('invalid producutName', productName);
+                
+                onDisconnect(`Invalid sensor type: ${productName}`);
+                throw new Error(`Invalid sensor type: ${productName}`);
             }
         }
 
