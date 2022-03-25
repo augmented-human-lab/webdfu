@@ -1,353 +1,355 @@
-|dfu-util| loading dfu file.. 
-|dfu-util| dfu file loaded
-GET http://localhost:8000/favicon.ico 404 (File not found)
-|dfu-util| connectFunction
-|dfu-util| device null
-|dfu-util| requesting usb devices..
-|dfu-util| selectedDevice: USBDevice {usbVersionMajor: 2, usbVersionMinor: 1, usbVersionSubminor: 0, deviceClass: 239, deviceSubclass: 2, …}
-|dfu-util| interfaces [{…}]
-|dfu-util| 1 interface
-|dfu-util| fixInterfaceNames..
-|dfu-util| connecting..
-|dfu-util| connect
-|dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 2, properties: {…}, logDebug: ƒ, …}
-|dfu-util| interfaceProtocol 1
-|dfu-util| timeout to detach..
-|dfu-util| productName Kiwrious UV and Light Sensor
-|dfu-util| IS uv
-detatch called
-|dfu-util| onDisconnect
-|dfu-util| onUnexpectedDisconnect
-|dfu-util| connectFunction
-|dfu-util| device null
-|dfu-util| requesting usb devices..
-|dfu-util| selectedDevice: USBDevice {usbVersionMajor: 2, usbVersionMinor: 0, usbVersionSubminor: 0, deviceClass: 0, deviceSubclass: 0, …}
-|dfu-util| interfaces [{…}]
-|dfu-util| 1 interface
-|dfu-util| fixInterfaceNames..
-DOMException: A transfer error has occurred.
-|dfu-util| connecting..
-|dfu-util| connect
-|dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 0, properties: {…}, logDebug: ƒ, …}
-|dfu-util| interfaceProtocol 2
-|dfu-util| download/step3 clicked
-|dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 0, properties: {…}, logDebug: ƒ, …}
-|dfu-util| firmwareFile ArrayBuffer(9772)
-|dfu-util| getting device status..
-|dfu-util| status {status: 0, pollTimeout: 0, state: 2}
-|dfu-util| do_download firmware file into the device..
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 64 bytes
-Wrote 64 bytes
-Sent 44 bytes
-Wrote 44 bytes
-Sending empty block
-Final DFU status: state=2, status=0
-Ignored reset error
-|dfu-util| do_download done
-|dfu-util| waitDisconnected..
-|dfu-util| waitDisconnected ERROR undefined
-Device unexpectedly tolerated manifestation.
-|dfu-util| onUnexpectedDisconnect
-|dfu-util| onDisconnect
+dfu-util.js:6 |dfu-util| loading dfu file.. 
+dfu-util.js:6 |dfu-util| dfu file loaded
+favicon.ico:1          GET http://localhost:8000/favicon.ico 404 (File not found)
+dfu-util.js:6 |dfu-util| STEP1/connectButton clicked
+dfu-util.js:6 |dfu-util| connectFunction
+dfu-util.js:6 |dfu-util| device null
+dfu-util.js:6 |dfu-util| requesting usb devices..
+dfu-util.js:6 |dfu-util| selectedDevice: USBDevice {usbVersionMajor: 2, usbVersionMinor: 1, usbVersionSubminor: 0, deviceClass: 239, deviceSubclass: 2, …}
+dfu-util.js:6 |dfu-util| interfaces [{…}]
+dfu-util.js:6 |dfu-util| 1 interface
+dfu-util.js:6 |dfu-util| fixInterfaceNames..
+dfu-util.js:6 |dfu-util| connecting..
+dfu-util.js:6 |dfu-util| connect
+dfu-util.js:6 |dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 2, properties: {…}, logDebug: ƒ, …}
+dfu-util.js:6 |dfu-util| interfaceProtocol 1
+dfu-util.js:6 |dfu-util| timeout to detach..
+dfu-util.js:6 |dfu-util| productName Kiwrious UV and Light Sensor
+dfu-util.js:6 |dfu-util| IS uv
+dfu-util.js:641 detatch called
+dfu-util.js:6 |dfu-util| onDisconnect
+dfu-util.js:6 |dfu-util| onUnexpectedDisconnect
+dfu-util.js:6 |dfu-util| STEP2/connectButton2 clicked
+dfu-util.js:6 |dfu-util| connectFunction
+dfu-util.js:6 |dfu-util| device null
+dfu-util.js:6 |dfu-util| requesting usb devices..
+dfu-util.js:6 |dfu-util| selectedDevice: USBDevice {usbVersionMajor: 2, usbVersionMinor: 0, usbVersionSubminor: 0, deviceClass: 0, deviceSubclass: 0, …}
+dfu-util.js:6 |dfu-util| interfaces [{…}]
+dfu-util.js:6 |dfu-util| 1 interface
+dfu-util.js:6 |dfu-util| fixInterfaceNames..
+dfu.js:231 DOMException: A transfer error has occurred.
+dfu-util.js:6 |dfu-util| connecting..
+dfu-util.js:6 |dfu-util| connect
+dfu-util.js:6 |dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 0, properties: {…}, logDebug: ƒ, …}
+dfu-util.js:6 |dfu-util| interfaceProtocol 2
+dfu-util.js:6 |dfu-util| STEP3/downloadButton clicked
+dfu-util.js:6 |dfu-util| device dfu.Device {device_: USBDevice, settings: {…}, intfNumber: 0, properties: {…}, logDebug: ƒ, …}
+dfu-util.js:6 |dfu-util| firmwareFile ArrayBuffer(9772)
+dfu-util.js:6 |dfu-util| getting device status..
+dfu-util.js:6 |dfu-util| status {status: 0, pollTimeout: 0, state: 2}
+dfu-util.js:6 |dfu-util| do_download firmware file into the device..
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 64 bytes
+dfu-util.js:177 Wrote 64 bytes
+dfu-util.js:177 Sent 44 bytes
+dfu-util.js:177 Wrote 44 bytes
+dfu-util.js:177 Sending empty block
+dfu-util.js:177 Final DFU status: state=2, status=0
+dfu-util.js:177 Ignored reset error
+dfu-util.js:6 |dfu-util| do_download done
+dfu-util.js:6 |dfu-util| waitDisconnected..
+dfu-util.js:6 |dfu-util| waitDisconnected ERROR undefined
+dfu-util.js:737 Device unexpectedly tolerated manifestation.
+dfu-util.js:6 |dfu-util| onUnexpectedDisconnect
+dfu-util.js:6 |dfu-util| onDisconnect

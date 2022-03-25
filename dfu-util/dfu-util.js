@@ -367,7 +367,6 @@ var device = null;
 
                 if (device.settings.alternate.interfaceProtocol == 0x02) {
                     if (!desc.CanUpload) {
-                        
                         dfuseUploadSizeField.disabled = true;
                     }
                     if (!desc.CanDnload) {
@@ -528,9 +527,11 @@ var device = null;
 
 
          connectButton.addEventListener('click', function(){
+             _log('STEP1/connectButton clicked');
             connectFunction();
          });
           connectButton2.addEventListener('click', function(){
+            _log('STEP2/connectButton2 clicked');
             connectFunction();
          });
 
@@ -663,16 +664,11 @@ var device = null;
                         device = null;
                     }
                 );
-
-
-              
             }
-
-
         }
 
         detachButton.addEventListener('click', function() {
-            console.log("detatch clicked")
+            _log("detach clicked")
             detatchFunction();
         });
 
@@ -690,7 +686,7 @@ var device = null;
         });
 
         downloadButton.addEventListener('click', async function(event) {
-            _log('download/step3 clicked');
+            _log('STEP3/downloadButton clicked');
             event.preventDefault();
             event.stopPropagation();
             if (!configForm.checkValidity()) {
