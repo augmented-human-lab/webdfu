@@ -358,8 +358,6 @@ var device = null;
               //  downloadButton.disabled = true;
             } else {
                 // DFU
-                
-                downloadStep3Button.disabled = false;
             }
             
             return device;
@@ -367,12 +365,14 @@ var device = null;
 
         connectStep1Button.addEventListener('click', async function(){
             _log('STEP1/connectButton clicked');
-            // connectFunction();
+
             connectStep1Button.disabled = true;
 
             try {
                 await requestDeviceConnectionAsync();
                 await requestDfuModeAsync();
+
+                connectStep2Button.disabled = false;
             }
             catch (error) {
                 _log('failed in step 1', error);
@@ -382,9 +382,33 @@ var device = null;
 
         connectStep2Button.addEventListener('click', async function(){
             _log('STEP2/connectButton2 clicked');
-            // connectFunction();
 
-            await requestDeviceConnectionAsync();
+            connectStep2Button.disabled = true;
+
+            try {
+                await requestDeviceConnectionAsync();
+
+                downloadStep3Button.disabled = false;
+            }
+            catch (error) {
+                _log('failed in step 2', error);
+                connectStep2Button.disabled = false;
+            }
+        });
+
+        downloadStep3Button.addEventListener('click', async function(event) {
+            _log('STEP3/downloadButton clicked');
+            event.preventDefault();
+            event.stopPropagation();
+
+            downloadStep3Button.disabled = true;
+
+            try {
+                await requestDownloadDfuAsync();
+            }
+            catch (error) {
+                downloadStep3Button.disabled = false;
+            }
         });
 
         async function requestDeviceConnectionAsync() {
@@ -443,10 +467,11 @@ var device = null;
             if (interfaceProtocol != 0x01) {
                 _log('invalid interface protocol. expecting 0x01', interfaceProtocol);
 
+                if (interfaceProtocol == 0x02) {
+                    onDisconnect("Sensor already in DFU mode. Disconnect and reconnct again");
+                }
                 throw new Error('invalid interface protocol');
             }
-
-            downloadStep3Button.disabled = true;
             
             const productName = device.device_.productName;
             _log('productName', productName);
@@ -454,19 +479,18 @@ var device = null;
             const dfuLoadResult = await loadDfuFileForProductNameAsync(productName);
             _log('dfuLoadResult', dfuLoadResult);
 
-            if (dfuLoadResult) {
-                _log('load DFU file success')
-                connectStep2Button.disabled = false;
-                detatchFunction()
-            }
-            else {
+            if (!dfuLoadResult) {
                 _log('Failed to load DFU file');
-                connectStep2Button.disabled = true;
                 logWarning("Please connect a Kiwrious UV sensor");
-                device.logWarning(productName)
-            }
+                device.logWarning(productName);
 
+                throw new Error('Failed to load DFU');
+            }
+            
+            _log('load DFU file success');
+            detatchFunction();
         }
+
         async function loadDfuFileForProductNameAsync(productName) {
             var dfuFileName = getDfuFileNameForProductName(productName);
             if (!dfuFileName) {
@@ -528,69 +552,72 @@ var device = null;
         }
 
 
-        downloadStep3Button.addEventListener('click', async function(event) {
-            _log('STEP3/downloadButton clicked');
-            event.preventDefault();
-            event.stopPropagation();
-
-            connectStep1Button.disabled = true;
-            connectStep2Button.disabled = true;
-            downloadStep3Button.disabled = true;
-
-            _log('device', device);
-            _log('firmwareFile', firmwareFile);
-
-            if (device && firmwareFile != null) {
-                setLogContext(downloadLog);
-                clearLog(downloadLog);
-
-                try {
-                    _log('getting device status..');
-                    let status = await device.getStatus();
-                    _log('status', status);
-
-                    if (status.state == dfu.dfuERROR) {
-                        _log('clearing device status');
-                        await device.clearStatus();
-                    }
-                } catch (error) {
-                    _log('ERROR', error);
-                    device.logWarning("Failed to clear status");
-                }
-
-                _log('do_download firmware file into the device..');
-                await device.do_download(transferSize, firmwareFile, manifestationTolerant).then(
-                    () => {
-                        _log('do_download done');
-                        logInfo("Done!");
-                        setLogContext(null);
-                        
-                        if (!manifestationTolerant) {
-                            _log('waitDisconnected..')
-                            device.waitDisconnected(5000).then(
-                                dev => {
-                                    _log('waitDisconnected ok')
-                                    onDisconnect();
-                                    device = null;
-                                },
-                                error => {
-                                    _log('waitDisconnected ERROR', error);
-                                    // It didn't reset and disconnect for some reason...
-                                    console.log("Device unexpectedly tolerated manifestation.");
-                                }
-                            );
-                        }
-                    },
-                    error => {
-                        _log('do_download ERROR', error)
-                        logError(error);
-                        setLogContext(null);
-                    }
-                )
+        async function requestDownloadDfuAsync() {
+            
+            if (!device) {
+                _log('device is not connected yet.')
+                throw new Error('device is not connected');
             }
 
-            //return false;
-        });
+            
+            if (!firmwareFile) {
+                _log('firmwareFile is not loaded yet.')
+                throw new Error('firmwareFile is not loaded');
+            }
+            
+            setLogContext(downloadLog);
+            clearLog(downloadLog);
+
+            try {
+                _log('getting device status..');
+                let status = await device.getStatus();
+                _log('status', status);
+
+                if (status.state == dfu.dfuERROR) {
+                    _log('clearing device status');
+                    await device.clearStatus();
+                }
+            } catch (error) {
+                _log('ERROR', error);
+                device.logWarning("Failed to clear status");
+
+                throw new Error('Failed to clear status');
+            }
+
+            _log('do_download firmware file into the device..');
+
+            try {
+                await device.do_download(transferSize, firmwareFile, manifestationTolerant);
+
+                _log('do_download done');
+                logInfo("Done!");
+                setLogContext(null);
+                
+                if (!manifestationTolerant) {
+                    _log('waitDisconnected..');
+
+                    try {
+                        await device.waitDisconnected(5000);
+
+                        _log('waitDisconnected ok')
+                        onDisconnect();
+                        device = null;
+                    }
+                    catch(error) {
+                        _log('waitDisconnected ERROR', error);
+                        // It didn't reset and disconnect for some reason...
+                        console.log("Device unexpectedly tolerated manifestation.");
+                    }
+                }
+            }
+            catch (error) {
+                _log('do_download ERROR', error)
+                logError(error);
+                setLogContext(null);
+
+                throw new Error('Failed to do_download');
+            }
+        }
 
         // Check if WebUSB is available
         if (typeof navigator.usb !== 'undefined') {
