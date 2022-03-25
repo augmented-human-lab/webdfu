@@ -286,7 +286,7 @@ var device = null;
 
 
 
-        var dfuFileLocation = "./UV_Light_fixed.dfu";
+        var dfuFileLocation = "./SENSOR_UV.dfu";
 
         function loadDfuFile(dfuFileLocation) {
             _log('loading dfu file.. ');
