@@ -583,7 +583,16 @@ var device = null;
                     },
                     async error => {
                         await device.close();
-                        onDisconnect(error);
+
+                        
+                        if (error === 'ControlTransferOut failed: NetworkError: A transfer error has occurred.') {
+                            _log('skipping known error in dfu library.. ');
+                            onDisconnect();
+                        }
+                        else {
+                            onDisconnect(error);
+                        }
+
                         device = null;
                     }
                 );
