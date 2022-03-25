@@ -368,9 +368,16 @@ var device = null;
         connectStep1Button.addEventListener('click', async function(){
             _log('STEP1/connectButton clicked');
             // connectFunction();
+            connectStep1Button.disabled = true;
 
-            await requestDeviceConnectionAsync();
-            await requestDfuModeAsync();
+            try {
+                await requestDeviceConnectionAsync();
+                await requestDfuModeAsync();
+            }
+            catch (error) {
+                _log('failed in step 1', error);
+                connectStep1Button.disabled = false;
+            }
         });
 
         connectStep2Button.addEventListener('click', async function(){
@@ -379,47 +386,6 @@ var device = null;
 
             await requestDeviceConnectionAsync();
         });
-
-        async function requestDfuModeAsync() {
-            _log('requestDfuModeAsync');
-
-            if (!device) {
-                _log('device is not connected yet.')
-                return;
-            }
-
-            _log('interfaceProtocol', device.settings.alternate.interfaceProtocol);
-            if (device.settings.alternate.interfaceProtocol != 0x01) {
-                _log('invalid interface protocol. expecting 0x01');
-
-                return;
-            }
-
-            _log("100ms timeout to detach..")
-            setTimeout(async function () {
-                _log('100ms passed');
-
-                downloadStep3Button.disabled = true;
-                
-                const productName = device.device_.productName;
-                _log('productName', productName);
-
-                const dfuLoadResult = await loadDfuFileForProductNameAsync(productName);
-                _log('dfuLoadResult', dfuLoadResult);
-
-                if (dfuLoadResult) {
-                    _log('load DFU file success')
-                    connectStep2Button.disabled = false;
-                    detatchFunction()
-                }
-                else {
-                    _log('Failed to load DFU file');
-                    connectStep2Button.disabled = true;
-                    logWarning("Please connect a Kiwrious UV sensor");
-                    device.logWarning(productName)
-                }
-            }, 100);
-        }
 
         async function requestDeviceConnectionAsync() {
             _log('requestDeviceConnectionAsync');
@@ -432,7 +398,7 @@ var device = null;
                 onDisconnect();
                 device = null;
 
-                return;
+                throw new Error('already connected');
             }
 
             let filters = [];
@@ -451,7 +417,7 @@ var device = null;
                 _log('0 interface');
                 statusDisplay.textContent = "The selected device does not have any USB DFU interfaces.";
 
-                return;
+                throw new Error('invalid number of interfaces');
             } 
 
             _log('fixInterfaceNames..');
@@ -464,6 +430,43 @@ var device = null;
             return device;
         }
 
+        async function requestDfuModeAsync() {
+            _log('requestDfuModeAsync');
+
+            if (!device) {
+                _log('device is not connected yet.')
+                throw new Error('device is not connected');
+            }
+
+            const interfaceProtocol = device.settings.alternate.interfaceProtocol;
+            _log('interfaceProtocol', interfaceProtocol);
+            if (interfaceProtocol != 0x01) {
+                _log('invalid interface protocol. expecting 0x01', interfaceProtocol);
+
+                throw new Error('invalid interface protocol');
+            }
+
+            downloadStep3Button.disabled = true;
+            
+            const productName = device.device_.productName;
+            _log('productName', productName);
+
+            const dfuLoadResult = await loadDfuFileForProductNameAsync(productName);
+            _log('dfuLoadResult', dfuLoadResult);
+
+            if (dfuLoadResult) {
+                _log('load DFU file success')
+                connectStep2Button.disabled = false;
+                detatchFunction()
+            }
+            else {
+                _log('Failed to load DFU file');
+                connectStep2Button.disabled = true;
+                logWarning("Please connect a Kiwrious UV sensor");
+                device.logWarning(productName)
+            }
+
+        }
         async function loadDfuFileForProductNameAsync(productName) {
             var dfuFileName = getDfuFileNameForProductName(productName);
             if (!dfuFileName) {
