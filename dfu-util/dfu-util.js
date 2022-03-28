@@ -468,7 +468,7 @@ var device = null;
                 _log('invalid interface protocol. expecting 0x01', interfaceProtocol);
 
                 if (interfaceProtocol == 0x02) {
-                    onDisconnect("Sensor already in DFU mode. Disconnect and reconnct again");
+                    onDisconnect("Sensor already in DFU mode. Unplug the sensor and plug it back to retry");
                 }
                 throw new Error('invalid interface protocol');
             }
@@ -512,8 +512,9 @@ var device = null;
             else {
                 _log('invalid producutName', productName);
                 
-                onDisconnect(`Invalid sensor type: ${productName}`);
-                throw new Error(`Invalid sensor type: ${productName}`);
+                const msg = `Invalid sensor type: ${productName}. Supported sensors are UV and Heart Rate.`;
+                onDisconnect(msg);
+                throw new Error(msg);
             }
         }
 
