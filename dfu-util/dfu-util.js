@@ -189,6 +189,11 @@ var device = null;
         let connectStep2Button = document.querySelector("#connectStep2");
         let downloadStep3Button = document.querySelector("#downloadStep3");
 
+        let listStep1 = document.getElementById("listStep1");
+        let listStep2 = document.getElementById("listStep2");
+        let listStep3 = document.getElementById("listStep3");
+        let listStep4 = document.getElementById("listStep4");
+
         let statusDisplay = document.querySelector("#status");
         let infoDisplay = document.querySelector("#usbInfo");
         let dfuDisplay = document.querySelector("#dfuInfo");
@@ -373,6 +378,9 @@ var device = null;
                 await requestDfuModeAsync();
 
                 connectStep2Button.disabled = false;
+                
+                listStep1.classList.remove('active');
+                listStep2.classList.add('active');
             }
             catch (error) {
                 _log('failed in step 1', error);
@@ -389,6 +397,9 @@ var device = null;
                 await requestDeviceConnectionAsync();
 
                 downloadStep3Button.disabled = false;
+
+                listStep2.classList.remove('active');
+                listStep3.classList.add('active');
             }
             catch (error) {
                 _log('failed in step 2', error);
@@ -405,6 +416,9 @@ var device = null;
 
             try {
                 await requestDownloadDfuAsync();
+
+                listStep3.classList.remove('active');
+                listStep4.classList.add('active');
             }
             catch (error) {
                 downloadStep3Button.disabled = false;

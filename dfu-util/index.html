@@ -29,6 +29,8 @@
     button {
       background-color: #ff623b;
       border: none;
+      width: 200px;
+      height: 60px;
     }
 
     a {
@@ -37,6 +39,14 @@
 
     h6 {
       margin-bottom: 0;
+    }
+
+    li {
+      color: #ccc;
+    }
+
+    li.active {
+      color: #000;
     }
   </style>
 </head>
@@ -50,10 +60,10 @@
   <h2>Kiwrious Sensor Update Utility</h2>
   <em>For UV and Heart Rate Sensors</em> 
   <ol>
-    <li>Click Step 1 button and select the Kiwrious Sensor, sensor light should be flashing now</li>
-    <li>Click Step 2 button and select the Kiwrious DFU</li>
-    <li>Click Step 3, check Status below</li>
-    <li>If you see "Done!", then the sensor update is complete. Please unplug the sensor and plug it back in to use it in <a target="_blank" href="https://learn.kiwrious.com/">https://learn.kiwrious.com/</a> or <a target="_blank" href="https://measure.kiwrious.com/">https://measure.kiwrious.com/</a>
+    <li id="listStep1" class="active">Click Step 1 button and select the Kiwrious Sensor, sensor light should be flashing now</li>
+    <li id="listStep2">Click Step 2 button and select the Kiwrious DFU</li>
+    <li id="listStep3">Click Step 3, check Status below</li>
+    <li id="listStep4">If you see "Done!", then the sensor update is complete. Please unplug the sensor and plug it back in to use it in <a target="_blank" href="https://learn.kiwrious.com/">https://learn.kiwrious.com/</a> or <a target="_blank" href="https://measure.kiwrious.com/">https://measure.kiwrious.com/</a>
       Otherwise, please contact us if any issues at <a href="mailto:support@kiwrious.com">support@kiwrious.com</a> </li>
   </ol>
 
